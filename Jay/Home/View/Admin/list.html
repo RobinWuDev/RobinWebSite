@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>list</title>
+</head>
+<body>
+{$info}
+<volist name="albums" id="album">
+<div>
+	{$album.id}.{$album.name}<a href="__URL__/addMusic?id={$album.id}"><input type="button" value="add_music"/></a>
+	<volist name="album['musics']" id="music">
+	<ul>
+	<li>
+	{$music.name}
+	</li>
+	</ul>
+	</volist>
+</div>
+</volist>
+<form action="__URL__/add_album">
+	<input type="submit" value="add"><br/>
+</form>
+</body>
+</html>

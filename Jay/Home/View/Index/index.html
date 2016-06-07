@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jay的音乐网站</title>
+    <link href="/Public/Default/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Public/Default/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <button type="button" class="btn btn-default navbar-btn" id="song-play-btn">
+        <span class="glyphicon glyphicon-play" aria-hidden="true" id="song-play-icon"></span>
+    </button>
+    <if condition="$outMusic['id'] gt 0 ">
+        <p class="navbar-brand" id="song-name">{$outMusic.name}</p>
+    <else />
+        <p class="navbar-brand" id="song-name">Jay的音乐网站</p>
+    </if>
+  </div>
+  <div>
+  </div>
+</nav>
+    <div class="container-fluid">
+        	<volist name="albums" id="album">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{$album.name}-{$album.year}</div>
+                    <table class="table">
+                        <volist name="album['musics']" id="music">
+                            <tr>
+                                <td class="music" onclick="window.location.href='__URL__?id={$music.id}'">{$music.name}</td>
+                            </tr> 
+                        </volist>
+                    </table>
+                </div>
+            </volist>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/Public/Default/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/Public/Default/js/player.js"></script>
+    <script type="text/javascript">
+    var host = window.location.host;
+    var url = "http://" + host + "/Public/Uploads/music/{$outMusic.album}_{$outMusic.id}.mp3";
+    play(url);
+    </script>
+  </body>
+</html>
