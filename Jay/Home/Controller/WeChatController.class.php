@@ -54,30 +54,25 @@ class WeChatController extends Controller {
     }
 
     private function showSong() {
-        $Music = D("Music");
-        $Album = D("Album");
-        $musics = $Music->select();
-        $count = count($musics);
-        $rand = rand(0,$count-1);
-        $music = $musics[$rand];
-        $album = $Album->find($music['album_id']);
+        $result = NetUtil::http("http://robinwu.com:8080/index/randMusic");
+        $jsonObj = json_decode($result,true);
+        $music = $jsonObj["data"];
 
-        $url = "http://music.444dish.com/Public/Uploads/music/";
-        $url .= $music['album_id'];
+        $url = "http://music.robinwu.com/Public/Uploads/music/";
+        $url .= $music['albumId'];
         $url .= "_";
         $url .= $music['id'];
         $url .= ".mp3";
 
-        $this->wechat->music($music['name'], $album['name'], $url, $url)->reply();
+        $this->wechat->music($music['name'], $$music['albumName'], $url, $url)->reply();
     }
 
     private function showMingYan() {
-        $MingYan = D("Mingyan");
-        $mingyans = $MingYan->select();
-        $count = count($mingyans);
-        $rand = rand(0,$count-1);
-        $mingyan = $mingyans[$rand];
-        $content = "".$mingyan['content']."\n--".$mingyan['author'];
+        $result = NetUtil::http("http://robinwu.com:8080/index/randMingYan");
+        $jsonObj = json_decode($result,true);
+        $mingYan = $jsonObj["data"];
+
+        $content = "".$mingYan['content']."\n--".$mingYan['author'];
 
         $this->wechat->text($content)->reply();
     }
